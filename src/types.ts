@@ -15,6 +15,7 @@ export interface RawAttachment {
 
 // Raw shape of one message entry in the export JSON
 export interface RawMessage {
+    id: string;
     content: string;
     timestamp: string;
     author: {
@@ -22,6 +23,10 @@ export interface RawMessage {
         nickname: string;
     };
     attachments: RawAttachment[];
+}
+
+export interface ParseOptions {
+    useLocalImages?: boolean;
 }
 
 export interface RawExport {

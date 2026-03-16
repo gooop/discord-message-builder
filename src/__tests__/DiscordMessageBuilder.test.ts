@@ -159,4 +159,47 @@ describe('DiscordMessageBuilder.parseMessages', () => {
             expect(msg.imgLocation).toBe(IMAGE_URL);
         });
     });
+
+    describe('useLocalImages option', () => {
+        test('returns messageId.ext instead of url when useLocalImages is true', () => {
+            const [msg] = DiscordMessageBuilder.parseMessages(
+                makeFixture([
+                    { id: '1', url: IMAGE_URL, fileName: 'photo.png', fileSizeBytes: 100 },
+                ]),
+                { useLocalImages: true },
+            );
+            expect(msg.imgLocation).toBe('100.png');
+        });
+
+        test('uses the extension from the attachment fileName', () => {
+            const [msg] = DiscordMessageBuilder.parseMessages(
+                makeFixture([
+                    {
+                        id: '1',
+                        url: IMAGE_URL.replace('.png', '.jpg'),
+                        fileName: 'photo.jpg',
+                        fileSizeBytes: 100,
+                    },
+                ]),
+                { useLocalImages: true },
+            );
+            expect(msg.imgLocation).toBe('100.jpg');
+        });
+
+        test('is still null when no image attachment exists', () => {
+            const [msg] = DiscordMessageBuilder.parseMessages(makeFixture(), {
+                useLocalImages: true,
+            });
+            expect(msg.imgLocation).toBeNull();
+        });
+
+        test('defaults to url behaviour when option is omitted', () => {
+            const [msg] = DiscordMessageBuilder.parseMessages(
+                makeFixture([
+                    { id: '1', url: IMAGE_URL, fileName: 'photo.png', fileSizeBytes: 100 },
+                ]),
+            );
+            expect(msg.imgLocation).toBe(IMAGE_URL);
+        });
+    });
 });
