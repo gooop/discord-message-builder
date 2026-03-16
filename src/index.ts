@@ -1,1 +1,2 @@
-// Public API barrel — re-export from here as modules are added.
+export { DiscordMessageBuilder } from './DiscordMessageBuilder';
+export type { DiscordMessage } from './types';
