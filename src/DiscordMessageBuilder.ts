@@ -20,7 +20,7 @@ export class DiscordMessageBuilder {
     }
 
     private static findImageLocation(
-        messageId: string,
+        _messageId: string,
         attachments: RawAttachment[],
         options: ParseOptions,
     ): string | null {
@@ -31,7 +31,7 @@ export class DiscordMessageBuilder {
         if (!img) return null;
         if (options.useLocalImages) {
             const ext = img.fileName.split('.').at(-1)!.toLowerCase();
-            return `${messageId}.${ext}`;
+            return `${img.id}.${ext}`;
         }
         return img.url;
     }

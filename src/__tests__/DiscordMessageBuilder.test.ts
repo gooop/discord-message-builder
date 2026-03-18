@@ -161,14 +161,14 @@ describe('DiscordMessageBuilder.parseMessages', () => {
     });
 
     describe('useLocalImages option', () => {
-        test('returns messageId.ext instead of url when useLocalImages is true', () => {
+        test('returns attachmentId.ext instead of url when useLocalImages is true', () => {
             const [msg] = DiscordMessageBuilder.parseMessages(
                 makeFixture([
                     { id: '1', url: IMAGE_URL, fileName: 'photo.png', fileSizeBytes: 100 },
                 ]),
                 { useLocalImages: true },
             );
-            expect(msg.imgLocation).toBe('100.png');
+            expect(msg.imgLocation).toBe('1.png');
         });
 
         test('uses the extension from the attachment fileName', () => {
@@ -183,7 +183,7 @@ describe('DiscordMessageBuilder.parseMessages', () => {
                 ]),
                 { useLocalImages: true },
             );
-            expect(msg.imgLocation).toBe('100.jpg');
+            expect(msg.imgLocation).toBe('1.jpg');
         });
 
         test('is still null when no image attachment exists', () => {
